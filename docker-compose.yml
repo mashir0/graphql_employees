@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  server: 
+    build:
+      context:    ./server
+      dockerfile: ../docker/server.Dockerfile 
+    ports:
+      - '8000:8000'
+    volumes:
+      - './:/work/graphql_employees'
+    tty: true
+    stdin_open: true
+
