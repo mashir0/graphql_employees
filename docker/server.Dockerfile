@@ -18,5 +18,5 @@ RUN pip install --upgrade pip              && \
 RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 #   fisher install oh-my-fish/theme-bobthefish
 
-WORKDIR /work
+WORKDIR /work/graphql_employees
 CMD ["/usr/bin/fish"]
