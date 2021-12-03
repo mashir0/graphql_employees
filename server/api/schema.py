@@ -34,7 +34,7 @@ class DepartmentNode(DjangoObjectType):
 # department mutation  
 #------- 
 class DeptCreateMutation(relay.ClientIDMutation):
-    class input:
+    class Input:
         dept_name = graphene.String(required=True)
 
     department = graphene.Field(DepartmentNode)
@@ -42,7 +42,7 @@ class DeptCreateMutation(relay.ClientIDMutation):
     @login_required
     def mutate_and_get_payload(root, info, **input):
         department = Department(
-            dept_name=input.get('dept_name')
+            dept_name=input.get('dept_name'),
         )
         department.save()
 
@@ -51,7 +51,7 @@ class DeptCreateMutation(relay.ClientIDMutation):
 
 
 class DeptDeleteMutation(relay.ClientIDMutation):
-    class input:
+    class Input:
         id = graphene.ID(required=True)
 
     department = graphene.Field(DepartmentNode)
@@ -64,18 +64,19 @@ class DeptDeleteMutation(relay.ClientIDMutation):
         )
         department.delete()
 
-        return DeptDeleteMutation(department=department)
+        # return DeptDeleteMutation(department=department)
+        return DeptDeleteMutation(department=None)
 
 #-------
 # employee mutation  
 #------- 
 class EmployeeCreateMutation(relay.ClientIDMutation):
-    class input:
+    class Input:
         name = graphene.String(required=True)
         join_year = graphene.Int(required=True)
         department = graphene.ID(required=True)
 
-    eomployee = graphene.Field(EmployeeNode)
+    employee = graphene.Field(EmployeeNode)
 
     @login_required
     def mutate_and_get_payload(root, info, **input):
@@ -90,17 +91,17 @@ class EmployeeCreateMutation(relay.ClientIDMutation):
 
 
 class EmployeeUpdateMutation(relay.ClientIDMutation):
-    class input:
+    class Input:
         id = graphene.ID(required=True)
         name = graphene.String(required=True)
         join_year = graphene.Int(required=True)
         department = graphene.ID(required=True)
     
-    emmloyee = graphene.Field(EmployeeNode)
+    employee = graphene.Field(EmployeeNode)
 
     @login_required
-    def mutate_and_get_payload(root, ingo, **input):
-        employee = employee(
+    def mutate_and_get_payload(root, info, **input):
+        employee = Employee(
             id=from_global_id(input.get('id'))[1]
         )
         employee.name = input.get('name')
@@ -111,7 +112,7 @@ class EmployeeUpdateMutation(relay.ClientIDMutation):
 
 
 class EmployeeDeleteMutation(relay.ClientIDMutation):
-    class input:
+    class Input:
         id = graphene.ID(required=True)
 
     employee = graphene.Field(EmployeeNode)
@@ -135,7 +136,7 @@ class Mutation(graphene.AbstractType):
 
 
 class Query(graphene.ObjectType):
-    emplyee = graphene.Field(EmployeeNode, id=graphene.NonNull(graphene.ID))
+    employee = graphene.Field(EmployeeNode, id=graphene.NonNull(graphene.ID))
     all_employees = DjangoFilterConnectionField(EmployeeNode)
     all_departments = DjangoFilterConnectionField(DepartmentNode)
 

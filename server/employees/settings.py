@@ -57,13 +57,12 @@ MIDDLEWARE = [
 
 GRAPHQL_JWT = {
     'JWT_VERIFY_EXPIRATION': True,
-    'JWT_EXPIRATION_DELTA': timedelta(minutes=60),
+    'JWT_EXPIRATION_DELTA': timedelta(minutes=6000),
 }
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000"
 ]
-
 
 ROOT_URLCONF = 'employees.urls'
 
@@ -96,8 +95,8 @@ DATABASES = {
     }
 }
 
-GRAPHENE = { 
-    'SCHEMA': 'employees.scheme.scheme',
+GRAPHENE = {
+    'SCHEMA': 'employees.schema.schema',
     'MIDDLEWARE': [ 
         'graphql_jwt.middleware.JSONWebTokenMiddleware', 
     ],
@@ -106,8 +105,8 @@ GRAPHENE = {
 AUTHENTICATION_BACKENDS = [ 
     'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',
-
 ]
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

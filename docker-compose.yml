@@ -11,4 +11,5 @@ services:
       - './:/work/graphql_employees'
     tty: true
     stdin_open: true
+#   user: "1000:1000"
 
