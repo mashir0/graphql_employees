@@ -1,6 +1,7 @@
 FROM python:3.8-alpine
 
-RUN apk --no-cache add \
+RUN apk update      && \
+    apk --no-cache add \
         curl    \
         fish    \
         git     \
@@ -18,12 +19,9 @@ RUN pip install --upgrade pip              && \
     pip install django-graphql-jwt==0.3.1
 
 RUN yarn global add create-react-app        
-#react-router-dom@5.3.0 
-#@material-ui/core 
-#@material-ui/icons
 
 RUN curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 #   fisher install oh-my-fish/theme-bobthefish
 
-WORKDIR /work/graphql_employees
+WORKDIR /work/server
 CMD ["/usr/bin/fish"]

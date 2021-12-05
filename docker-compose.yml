@@ -3,13 +3,26 @@ version: '3'
 services:
   server: 
     build:
-      context:    ./server
+      context: ./server
       dockerfile: ../docker/server.Dockerfile 
     ports:
       - '8000:8000'
     volumes:
-      - './:/work/graphql_employees'
+      - './server:/work/server'
+    command: sh -c 'python manage.py runserver 0.0.0.0:8000' 
     tty: true
     stdin_open: true
 #   user: "1000:1000"
+  front:
+    build:
+      context: ./front
+      dockerfile: ../docker/front.Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - './front:/work/front'
+    command: sh -c 'yarn && yarn start'
+    tty: true      
+    stdin_open: true
+
 

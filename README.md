@@ -1,8 +1,10 @@
 # graphql_employees
 
 # Run 
-docker-compose up -d 
-docker-compose exec server fish 
+docker-compose build 
+docker-compose up 
 
-cd server
-python manage.py  runserver 0.0.0.0:8000
+
+# Acsess
+front　localhost:3000
+server localhost:8000
