@@ -16,6 +16,7 @@ RUN apk update      && \
 #             @material-ui/core      \ 
 #             @material-ui/icons     \
 #             react-router-dom       \
+#             @apollo/client
 #             @apollo/react-hooks    \
 #             graphql                \
 #             jwt-decode
