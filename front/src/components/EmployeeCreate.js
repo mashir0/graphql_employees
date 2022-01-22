@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
-import StateContextProvider, { StateContext } from '../context/StateContext';
-import styles from "./EmployeeCreate.module.css"
-import {useMutation} from "@apollo/client"
-import { CREATE_EMPLOYEE, GET_EMPLOYEES, UPDATE_EMPLOYEE } from '../queries';
+import React, {useContext} from "react";
+import { StateContext } from "../context/StateContext";
+import styles from "./EmployeeCreate.module.css";
+import {useMutation} from "@apollo/client";
+import { CREATE_EMPLOYEE, GET_EMPLOYEES, UPDATE_EMPLOYEE } from "../queries";
 
 const EmployeeCreate = ({dataDepts}) => {
     const { 
@@ -10,12 +10,10 @@ const EmployeeCreate = ({dataDepts}) => {
         setName,
         joinYear,
         setJoinYear,
-        deptName,
-        setDeptName,
         selectedDept,
         setSelectedDept,
         editedId,
-        setEditedId
+        setEditedId,
     } = useContext(StateContext);
     const [createEmployee] = useMutation(CREATE_EMPLOYEE, {
         refetchQueries:[{query: GET_EMPLOYEES}],
@@ -23,7 +21,7 @@ const EmployeeCreate = ({dataDepts}) => {
 
     const [updateEmployee] = useMutation(UPDATE_EMPLOYEE, {
         refetchQueries: [{ query: GET_EMPLOYEES }],
-    })
+    });
 
     const selectOption = dataDepts?.allDepartments.edges.map((dept) => (
         <option key={dept.node.id} value={dept.node.id}>
@@ -36,14 +34,14 @@ const EmployeeCreate = ({dataDepts}) => {
         <div>
             <input
                 className={styles.employeeCreate__input}
-                placeholder='emoployee name'
+                placeholder="employee name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
             <input
                 className={styles.employeeCreate__input}
-                placeholder="year join"
+                placeholder="year of join"
                 type="number"
                 value={joinYear}
                 onChange={(e) => setJoinYear(e.target.value)}
@@ -52,7 +50,7 @@ const EmployeeCreate = ({dataDepts}) => {
         <select
             value={selectedDept}
             onChange={(e) => {
-                setSelectedDept(e.target.value)
+                setSelectedDept(e.target.value);
             }}
         >
             <option value="">select</option>
@@ -71,7 +69,7 @@ const EmployeeCreate = ({dataDepts}) => {
                                     name: name,
                                     joinYear: joinYear,
                                     department: selectedDept,
-                                }
+                                },
                             });
                         } catch (err) {
                             alert(err.message);
@@ -85,24 +83,25 @@ const EmployeeCreate = ({dataDepts}) => {
                         try {
                             await createEmployee({
                                 variables: {
-                                    id: editedId,
                                     name: name,
                                     joinYear: joinYear,
                                     department: selectedDept,
-                                }
-
+                                },
                             });
                         } catch (err) {
                             alert(err.message);
                         }
+                        setName("");
+                        setJoinYear(2020);
+                        setSelectedDept("");
                     }
 
             }
         >
-            {editedId ? "update" : "Create"}
+            {editedId ? "Update" : "Create"}
         </button>
     </>
-  )
+  );
 };
 
 export default EmployeeCreate;
